@@ -3,13 +3,11 @@ class ApplicationController < ActionController::Base
   # For APIs, you may want to use :null_session instead.
   protect_from_forgery with: :exception
 
-  before_action :configure_permitted_parameters, if: :devise_controller?
+  before_action :configure_permitted_paramters, if: :devise_controller?
 
-#there are 2 places to add full names and thats the 2 below
-# protected
-  def configure_permitted_parameters
-    devise_parameter_sanitizer.permit(:sign_up, keys: [:fullname])
-    devise_parameter_sanitizer.permit(:account_update, keys: [:fullname])
-
-  end
+  protected
+  	def configure_permitted_paramters
+  		devise_parameter_sanitizer.for(:sign_up) << :fullname
+  		devise_parameter_sanitizer.for(:account_update) << :fullname << :phone_number << :description << :email << :password
+  	end
 end
