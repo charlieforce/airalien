@@ -43,7 +43,7 @@
 								<%= @room.home_type %>
 							</div>
 							<div class="col-sm-3">
-								<%= @room.accomodate %> <%= @room.accomodate > 1? "Guests" : "Guest" %>
+								<%= @room.accommodate %> <%= @room.accommodate > 1? "Guests" : "Guest" %>
 							</div>
 							<div class="col-sm-3">
 								<%= @room.bed_room %> <%= @room.bed_room > 1? "Bedrooms" : "Bedroom" %>
@@ -174,7 +174,7 @@
 			<!-- Close by Rooms -->
 			<h3>Near by</h3>
 			<div class="row">
-				<% for room in @rooms.nearbys(10) %>
+				<% for room in @room.nearbys(10) %>
 
 					<div class="col-md-4">
 						<div class="panel panel-default">
