@@ -14,7 +14,8 @@
 //= require jquery
 //= require toastr
 //= require jquery_ujs
- //=require jquery-ui
+ //= require jquery-ui
+ //= require private_pub
  
 //= require_tree .
 //= require bootstrap

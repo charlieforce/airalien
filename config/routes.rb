@@ -21,10 +21,19 @@ Rails.application.routes.draw do
     resources :messages, only: [:index, :create]
   end
 
+  resources :rooms do
+    resources :reviews, only: [:create, :destroy]
+  end
+
   get '/preload' => 'reservations#preload'
   get '/preview' => 'reservations#preview'
 
   get '/your_trips' => 'reservations#your_trips'
   get '/your_reservations' => 'reservations#your_reservations'
+
+  post '/notify' => 'reservations#notify'
+  post '/your_trips' => 'reservations#your_trips'
+
+  get '/search' => 'pages#search'
 
 end
