@@ -3,7 +3,7 @@
 <% else %>
 
 	<% @reviews.order("id desc").each do |r| %>
-		<hr>
+
 
 		<div class="row">
 			<div class="col-md-1">
@@ -20,7 +20,28 @@
 				<div><%= r.created_at.strftime("%v") %></div>
 				<div><%= r.comment %></div>
 			</div>
-		</div>
+      </div>
+        <div class="row">
+        <div class="col-md-10 pull-right">
+         <%if check_for_guest_review(r.user_id,r.room_id).present? %>
+              <% host_review = check_for_guest_review(r.user_id,r.room_id).first %>
+              <div class="col-md-1">
+                <%= image_tag avatar_url(host_review.room.user), class: "img-circle avatar-medium" %>
+              </div>
+              <div class="col-md-11">
+                <div>
+                  <strong><%= host_review.room.user.fullname %>-Room Owner <div id="stars_<%= host_review.id %>"></div> </strong>
+                </div>
+
+                <div><%= host_review.created_at.strftime("%v") %></div>
+                <div><%= host_review.comment %></div>
+              </div>
+         <%elsif current_user == @room.user %>
+              <%= render 'reviews/guest_review_form', :locals => {:user_id => r.user_id} %>
+        <%end%>
+        </div>
+        </div>
+        <hr>
 
 		<script>
 			$('#stars_<%= r.id %>').raty({
@@ -31,5 +52,5 @@
 		</script>
 
 	<% end %>
-
+    <br>
 <% end %>

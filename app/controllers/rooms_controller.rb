@@ -3,7 +3,7 @@ class RoomsController < ApplicationController
   before_action :authenticate_user!, except: [:show]
 
   def index
-    @rooms = current_user.rooms
+    @rooms = current_user.rooms.paginate(:page => params[:page], :per_page => 6)
   end
 
   def show
@@ -11,7 +11,7 @@ class RoomsController < ApplicationController
 
     @booked = Reservation.where("room_id = ? AND user_id = ?", @room.id, current_user.id).present? if current_user
 
-    @reviews = @room.reviews
+    @reviews = @room.reviews.where(:review_type => "room review")
     @hasReview = @reviews.find_by(user_id: current_user.id) if current_user
   end
 

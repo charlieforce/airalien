@@ -6,7 +6,8 @@ class User < ActiveRecord::Base
          :confirmable, :omniauthable
 
   validates :fullname, presence: true, length: {maximum: 50}
-
+  has_attached_file :profile_picture, styles: { medium: "300x300>", thumb: "100x100>" }
+  validates_attachment_content_type :profile_picture, content_type: /\Aimage\/.*\z/
   has_many :rooms
   has_many :reservations
   has_many :reviews

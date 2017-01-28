@@ -34,7 +34,11 @@
 				<div class="col-md-4">
 					<div class="panel panel-default">
 						<div class="panel-heading preview">
-							<%= image_tag room.photos[0].image.url(:medium) %>
+              <%if room.photos[0].present? %>
+							 <%= image_tag room.photos[0].image.url(:medium), :size => "260x180" %>
+               <%else %>
+                  <%= image_tag Paperclip::Attachment.default_options[:default_url]  , :size => "260x180" %>
+              <%end%>
 						</div>
 						<div class="panel-body">
 							<%= link_to room.listing_name, room %>
@@ -44,28 +48,29 @@
 			<% end %>
 
 		</div>
-
+    <div class="row">
+      <div class="text-center"> <%= will_paginate @rooms %></div>
+    </div>
 		<h4>Reviews</h4><br>
 
-		<% @rooms.each do |room| %>
-			<% if !room.reviews.blank? %>
-
-				<% room.reviews.each do |review| %>
+       <% if @user_room_reviews.present? %>
+				<% @user_room_reviews.each do |review| %>
+         <br>
 					<div class="row">
 						<div class="col-md-2 text-center">
 							<%= image_tag avatar_url(review.user), class: "img-circle avatar-medium" %><br>
 							<%= review.user.fullname %>
 						</div>
 						<div class="col-md-10">
-							<%= link_to room.listing_name, room %><br>
+							<%= link_to review.room.listing_name, review.room %><br>
 							<%= review.comment %><br>
 							<%= review.created_at.strftime("%v") %>
 						</div>
 					</div>
 				<% end %>
-
-			<% end %>
-		<% end %>
+       <%else%>
+        <p>No reviews yet.</p>
+       <%end%>
 
 	</div>
 </div>

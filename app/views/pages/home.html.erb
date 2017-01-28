@@ -77,10 +77,15 @@
 		<div class="col-md-6">
 			<div class="panel panel-default">
 				<div class="panel-heading preview">
-					<%= image_tag room.photos[0].image.url(:medium) if room.photos.length > 0 %>
+          <% if room.photos.present? %>
+              <%= image_tag room.photos[0].image.url(:medium) , :size => "200x200" %>
+          <% else %>
+              <%= image_tag Paperclip::Attachment.default_options[:default_url]  , :size => "200x200" %>
+          <%end%>
 				</div>
+
 				<div class="panel-body">
-					<%= image_tag avatar_url(room.user), class: "img-circle avatar-small" %>&nbsp;
+					<%= image_tag avatar_url(room.user), class: "img-circle avatar-small" , :size => '30x30' %>&nbsp;
 					<%= link_to room.listing_name, room %>
 				</div>
 			</div>

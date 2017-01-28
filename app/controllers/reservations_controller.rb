@@ -21,25 +21,29 @@ class ReservationsController < ApplicationController
 	end
 
 	def create
-		@reservation = current_user.reservations.create(reservation_params)
+		 @room = Room.find(reservation_params[:room_id])
+		if current_user != @room.user
+			@reservation = current_user.reservations.create(reservation_params)
+			if @reservation
+				# send request to PayPal
+				values = {
+					business: 'chuck4u2008-facilitator@hotmail.com',
+					cmd: '_xclick',
+					upload: 1,
+					notify_url: 'http://3458e752.ngrok.io/notify',
+					amount: @reservation.total,
+					item_name: @reservation.room.listing_name,
+					item_number: @reservation.id,
+					quantity: '1',
+					return: 'http://3458e752.ngrok.io/your_trips'
+				}
 
-		if @reservation
-			# send request to PayPal
-			values = {
-				business: 'chuck4u2008-facilitator@hotmail.com',
-				cmd: '_xclick',
-				upload: 1,
-				notify_url: 'http://3458e752.ngrok.io/notify',
-				amount: @reservation.total,
-				item_name: @reservation.room.listing_name,
-				item_number: @reservation.id,
-				quantity: '1',
-				return: 'http://3458e752.ngrok.io/your_trips'
-			}
-
-			redirect_to "https://www.sandbox.paypal.com/cgi-bin/webscr?" + values.to_query
+				redirect_to "https://www.sandbox.paypal.com/cgi-bin/webscr?" + values.to_query
+			else
+				redirect_to @room, alert: "Oops, something went wrong..."
+			end
 		else
-			redirect_to @reservation.room, alert: "Oops, something went wrong..."
+			redirect_to @room, alert: "Oops, ypu can't book your own room ...."
 		end
 	end
 
@@ -65,7 +69,7 @@ class ReservationsController < ApplicationController
 	end
 
 	def your_reservations
-		@rooms = current_user.rooms
+		@reservations = Reservation.where("room_id in (?)",current_user.rooms.ids).paginate(:page => params[:page], :per_page => 6)
 	end
 
 	private

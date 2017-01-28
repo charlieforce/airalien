@@ -1,7 +1,7 @@
 class ReviewsController < ApplicationController
 
 	def create
-		@review = current_user.reviews.create(review_params)
+		@review = Review.create(review_params)
 		redirect_to @review.room
 	end
 
@@ -15,6 +15,6 @@ class ReviewsController < ApplicationController
 
 	private
 		def review_params
-			params.require(:review).permit(:comment, :star, :room_id)
+			params.require(:review).permit(:comment, :star, :room_id ,:review_type , :user_id)
 		end
 end

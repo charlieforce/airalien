@@ -12,9 +12,8 @@
 				Your Reservations
 			</div>
 			<div class="panel-body">
-				<% @rooms.each do |room| %>
 
-					<% room.reservations.each do |reservation| %>
+					<% @reservations.each do |reservation| %>
 						<div class="row">
 							<div class="col-md-2">
 								<%= reservation.start_date.strftime('%v') %>
@@ -36,9 +35,9 @@
 						</div>
 						<hr>
 					<% end %>
-
-				<% end %>
-
+        <div class="row">
+          <div class="text-center"> <%= will_paginate @reservations %></div>
+        </div>
 			</div>
 		</div>
 	</div>

@@ -40,9 +40,11 @@
 		</table>
 		<br>
 	</div>
-
+  <% if f.object.room.user == current_user %>
 	<%= f.submit "Book Now", id: "btn_book", class: "btn btn-primary wide", disabled: 'true' %>
-
+  <%else%>
+   <%= f.submit "Book Now", id: "btn_book", class: "btn btn-primary wide" %>
+  <%end%>
 <% end %>
 
 <script>
