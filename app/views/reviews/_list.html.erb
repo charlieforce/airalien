@@ -7,7 +7,7 @@
 
 		<div class="row">
 			<div class="col-md-1">
-				<%= image_tag avatar_url(r.user), class: "img-circle avatar-medium" %>
+				<%= image_tag avatar_url(r.user), class: "img-circle avatar-medium" , :size => '50x50' %>
 			</div>
 			<div class="col-md-11">
 				<div>
@@ -21,16 +21,17 @@
 				<div><%= r.comment %></div>
 			</div>
       </div>
+        <br>
         <div class="row">
-        <div class="col-md-10 pull-right">
+        <div class="col-md-11 pull-right">
          <%if check_for_guest_review(r.user_id,r.room_id).present? %>
               <% host_review = check_for_guest_review(r.user_id,r.room_id).first %>
-              <div class="col-md-1">
-                <%= image_tag avatar_url(host_review.room.user), class: "img-circle avatar-medium" %>
+              <div class="col-md-1 pull-left">
+                <%= image_tag avatar_url(host_review.room.user), class: "img-circle avatar-medium left",:size => '50x50' %>
               </div>
               <div class="col-md-11">
                 <div>
-                  <strong><%= host_review.room.user.fullname %>-Room Owner <div id="stars_<%= host_review.id %>"></div> </strong>
+                  <strong><%= host_review.room.user.fullname %> (owner) <div id="stars_<%= host_review.id %>"></div> </strong>
                 </div>
 
                 <div><%= host_review.created_at.strftime("%v") %></div>

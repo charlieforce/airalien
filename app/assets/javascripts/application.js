@@ -12,9 +12,11 @@
 //
 
 //= require jquery
-//= require jquery_ujs
-//= require bootstrap
 //= require toastr
+//= require jquery_ujs
 //= require jquery-ui
 //= require private_pub
+//= require bootstrap
 //= require_tree .
+
+

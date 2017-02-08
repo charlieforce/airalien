@@ -12,7 +12,11 @@ class PagesController < ApplicationController
   	arrResult = Array.new
 
   	if session[:loc_search] && session[:loc_search] != ""
+			begin
   		@rooms_address = Room.where(active: true).near(session[:loc_search], 5, order: 'distance')
+			rescue => exception
+				@rooms_address = Room.where(active: true,id: -1)
+			end
   	else
   		@rooms_address = Room.where(active: true).all
   	end
