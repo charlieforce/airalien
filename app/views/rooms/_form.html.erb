@@ -105,9 +105,9 @@
 				<div class="row">
 					<div class="col-md-4">
 						<div class="form-group">
-							<span class="btn btn-default btn-file">
+							<span>
 							    <i class="fa fa-cloud-upload fa-lg"></i> Upload Photos
-							    <%= file_field_tag "images[]", type: :file, multiple: true %>
+							    <%= file_field_tag "images[]", :title => "Upload Photos", type: :file, multiple: true ,class: 'btn btn-default btn-file' %>
 							</span>
 						</div>
 					</div>

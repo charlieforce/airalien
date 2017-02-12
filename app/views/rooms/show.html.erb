@@ -94,27 +94,25 @@
 		</div>
 
 		<!-- Carousel -->
+    <% if @photos.any? %>
 		<div class="row">
 			<div class="col-md-10 col-md-offset-1">
 				<div id="myCarousel" class="carousel slide" data-ride="carousel">
 
-					<% if @photos %>
 						<!-- Indicators -->
 				    <ol class="carousel-indicators">
 							<% @photos.each do |photo| %>
 								<li data-target="#myCarousel" data-slide-to="<%= photo.id %>"></li>
 							<% end %>
 						</ol>
-					<% end %>
+
 
 				  <div class="carousel-inner" role="listbox">
-				    <% if @photos %>
 							<% @photos.each do |photo| %>
 								<div class="item <%= 'active' if photo.id == @photos[0].id %>">
-				          <%= image_tag photo.image.url(:medium), :size => 'x400' %>
+				          <%= image_tag photo.image.url %>
 				        </div>
-							<% end %>
-						<% end %>
+            <% end %>
 				  </div>
 
 				  <a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev">
@@ -128,7 +126,7 @@
 				</div>
 			</div>
 		</div>
-
+    <% end %>
 		<br>
 		<hr>
 

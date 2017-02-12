@@ -286,3 +286,7 @@ input[type="checkbox"]:checked:before {
   vertical-align: middle;
   display: table-cell;
 }
+.carousel-inner > .item > img{
+  width:720px;
+  height:300px;
+}
